@@ -1,12 +1,12 @@
 <?php
 //@require_once("DBClass.php");
-$er = 1;
-@ini_set('display_errors', $er);
-@ini_set('max_execution_time', -1);
-/*ini_set('display_startup_errors',$er);
-if($er){
-error_reporting(E_ERROR);
-        }*/
+$er = 0;
+//@ini_set('display_errors', $er);
+//@ini_set('max_execution_time', -1);
+// ini_set('display_startup_errors',$er);
+// if($er){
+// error_reporting(E_ERROR);
+//         }
 require("JavascriptMinifier.phpclass");
 require("CssMinifier.phpclass");
 class core extends mysqli

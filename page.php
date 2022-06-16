@@ -33,12 +33,13 @@ $data = $core->getData("pages", ["id" => $id, "active" => 1]);
 <?php
 include "inc/footer.php";
 ?>
-<script src="https://assets.mahgooz.com/editor/1/areb1qcs0zpkp5fwovyspzh7npcdstci7dpz5mixf7c2s8f6/editor.min.js" referrerpolicy="origin"></script>
 <?php
 if (isv("edit") && $id && isset($_SESSION["portal_status_UserProfile"]) || 1 == 1) {
 ?>
+    <script src="https://assets.mahgooz.com/editor/1/areb1qcs0zpkp5fwovyspzh7npcdstci7dpz5mixf7c2s8f6/editor.min.js" referrerpolicy="origin"></script>
     <script>
-        mahgooz.init({
+        // var _mahgooz = new mahgooz();
+        var _mahgooz = mahgooz.init({
             selector: '#ctl01_PageZoneContainer1',
             menubar: false,
             inline: true,
@@ -47,66 +48,17 @@ if (isv("edit") && $id && isset($_SESSION["portal_status_UserProfile"]) || 1 == 
             images_upload_credentials: false,
             setup: function(editor) {
                 editor.on('change', function(e) {
-                    var myContent = tinymce.activeEditor.getContent();
-                    console.log(myContent);
+                    var myContent = _mahgooz.editor.getContent();
                 });
-            },
-            change: (editor) => {
-                var content = editor.getContent();
-            },
-            //file_browser_callback_types: 'file image media',
-            // file_picker_types: 'file image media',
-            // file_picker_callback: function(cb, value, meta) {
-            //     var input = document.createElement('input');
-            //     input.setAttribute('type', 'file');
-            //     input.onchange = function() {
-            //         var file = this.files[0];
-            //         var reader = new FileReader();
-
-            //         // FormData
-            //         var fd = new FormData();
-            //         var files = file;
-            //         fd.append('filetype', meta.filetype);
-            //         fd.append("file", files);
-
-            //         var filename = "";
-
-            //         // AJAX
-            //         var xhr, formData;
-            //         xhr = new XMLHttpRequest();
-            //         xhr.withCredentials = false;
-            //         xhr.open('POST', '/your-endpoint');
-
-            //         xhr.onload = function() {
-            //             var json;
-            //             if (xhr.status != 200) {
-            //                 failure('HTTP Error: ' + xhr.status);
-            //                 return;
-            //             }
-            //             json = JSON.parse(xhr.responseText);
-            //             if (!json || typeof json.location != 'string') {
-            //                 failure('Invalid JSON: ' + xhr.responseText);
-            //                 return;
-            //             }
-            //             success(json.location);
-            //             filename = json.location;
-            //         };
-            //         xhr.send(fd);
-
-            //         reader.onload = function(e) {
-            //             cb(filename);
-            //         };
-            //         reader.readAsDataURL(file);
-            //         return
-            //     };
-
-            //     input.click();
-            // },
+            }
+        }).then(function(e) {
+            _mahgooz = e;
         });
-        //console.log(editor);
+
+        // console.log(tinyMCEPopup);
+
         function saveChanges() {
-            var myContent = tinymce.activeEditor.getContent();
-            console.log(myContent);
+            var myContent = _mahgooz.editor.getContent();
             $.post("ajax.php", {
                 action: "data",
                 id: <?= $id ?>,
@@ -114,7 +66,7 @@ if (isv("edit") && $id && isset($_SESSION["portal_status_UserProfile"]) || 1 == 
                 data: myContent,
             }, function(d) {
                 console.log(d);
-                alert("The page was saved successfully!");
+                _mahgooz.nof("The page was saved successfully!");
             });
         }
     </script>
